@@ -1,0 +1,29 @@
+PODS:
+  - ACEDrawingView (2.0.1)
+  - CocoaLumberjack (2.3.0):
+    - CocoaLumberjack/Default (= 2.3.0)
+    - CocoaLumberjack/Extensions (= 2.3.0)
+  - CocoaLumberjack/Core (2.3.0)
+  - CocoaLumberjack/Default (2.3.0):
+    - CocoaLumberjack/Core
+  - CocoaLumberjack/Extensions (2.3.0):
+    - CocoaLumberjack/Default
+  - KSScreenCapture (0.1.0):
+    - CocoaLumberjack (~> 2.3.0)
+
+DEPENDENCIES:
+  - ACEDrawingView
+  - KSScreenCapture (from `../`)
+
+EXTERNAL SOURCES:
+  KSScreenCapture:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  ACEDrawingView: d4fc350b27f2c9483245483bb09b389769bc74dd
+  CocoaLumberjack: 97fab7ee5f507fe54445cca7ea80f926729cfd15
+  KSScreenCapture: 0a59fad307903efed4e59ff192007f6d77362f38
+
+PODFILE CHECKSUM: 35b4cc28688b4ccfd66943d7c017a40e89500743
+
+COCOAPODS: 1.1.1

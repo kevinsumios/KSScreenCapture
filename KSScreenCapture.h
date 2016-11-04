@@ -17,13 +17,13 @@
 @class KSScreenCapture;
 
 @protocol KSScreenCaptureDelegate <NSObject>
-- (void)KSScreenCaptureDidFinish:(KSScreenCapture *)capture path:(NSString *)videoPath;
+- (void)KSScreenCaptureDidFinish:(KSScreenCapture * _Nonnull)capture path:(NSString * _Nonnull)videoPath;
 
 @end
 
 @interface KSScreenCapture : NSObject
-@property id<KSScreenCaptureDelegate> delegate;
-@property KSAudioCapture *audioCapture;
+@property _Nullable id<KSScreenCaptureDelegate> delegate;
+@property  KSAudioCapture * _Nullable audioCapture;
 // With audio record or not
 @property BOOL muted;
 // Permission alert description.
@@ -32,14 +32,14 @@
 @property  NSString * _Nullable phPermissionAlertOK;
 @property NSString * _Nullable phPermissionAlertSetting;
 
-- (id)initWithTarget:(__kindof UIViewController *)target CaptureLayer:(CALayer *)layer;
-- (void)setCaptureLayer:(CALayer *)layer;
+- (id _Nonnull)initWithTarget:(__kindof UIViewController * _Nonnull)target CaptureLayer:(CALayer * _Nonnull)layer;
+- (void)setCaptureLayer:(CALayer * _Nonnull)layer;
 - (void)setFrameRate:(NSUInteger)rate;
-- (void)startRecordSuccess:(void (^)(void))success fail:(void (^)(void))fail;
+- (void)startRecordSuccess:(void (^ _Nullable)(void))success fail:(void (^ _Nullable)(void))fail;
 - (void)stopRecord;
 // A simple function to save the video in the phots album
 // with permission checking. If you need to do complicate
 // file operation, it is recommand to do it yourself.
-- (void)saveVideoAtPathToSavedPhotosAlbum:(NSString *)path completeSeletor:(SEL)action;
+- (void)saveVideoAtPathToSavedPhotosAlbum:(NSString * _Nonnull)path completeSeletor:(SEL _Nullable)action;
 
 @end

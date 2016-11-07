@@ -83,7 +83,7 @@
 
 #pragma mark - Action methods
 
-- (void)startRecordSuccessfully:(void (^)(void))success failed:(void (^)(void))fail {
+- (void)startRecordSuccess:(void  (^)(void))success fail:(void (^)(void))fail {
     // Check the permittion granting status.
     [[AVAudioSession sharedInstance] requestRecordPermission:^(BOOL granted) {
         dispatch_async(dispatch_get_main_queue(), ^{

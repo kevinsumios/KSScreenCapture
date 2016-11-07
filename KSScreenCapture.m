@@ -76,9 +76,9 @@
         }
     };
     if (_audioCapture) {
-        [_audioCapture startRecordSuccessfully:^{
+        [_audioCapture startRecordSuccess:^{
             recordBlock();
-        } failed:^{
+        } fail:^{
             DDLogError(@"Start audio record error.");
             if (fail) {
                 fail();

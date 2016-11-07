@@ -43,7 +43,7 @@ Support up to iOS 9.
   [capture startRecordSuccess:successCallback fail:failCallback];
   ```
 
-3.  Declair your view controller implement the KSScreenCaptureDelegate method, and hit the delegate method when capture is done. You can handle the video source file from the videoPath in the block by youself:
+3.  Declare your view controller implement the KSScreenCaptureDelegate method, and hit the delegate method when capture is done. You can handle the video source file from the videoPath in the block by youself:
 
   ``` objc
   - (void)KSScreenCaptureDidFinish:(KSScreenCapture *)capture path:(NSString *)videoPath {
@@ -73,7 +73,7 @@ You can also use the KSAudioCapture for audio recording only. Include the KSaudi
   [audioCapture startRecordSuccess:successCallback fail:failCallback];
   ```
   
-3.  Declair your view controller implement the KSAudioCaptureDelegate method, and hit the delegate method when capture is done. You can handle the audio source file from the url in the block by youself:
+3.  Declare your view controller implement the KSAudioCaptureDelegate method, and hit the delegate method when capture is done. You can handle the audio source file from the url in the block by youself:
 
   ``` objc
   - (void)KSAudioCaptureDidFinishWithURL:(NSURL *)url successfully:(BOOL)flag {

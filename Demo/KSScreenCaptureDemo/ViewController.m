@@ -26,11 +26,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     drawingView.delegate = self;
-    [drawingView.layer setBorderWidth:1.0];
-    [drawingView.layer setBorderColor:[UIColor clearColor].CGColor];
     
     // Initialize the screen capture
     _capture = [[KSScreenCapture alloc] initWithTarget:self CaptureLayer:recordView.layer];
+    _capture.highlighted = NO;
     _capture.delegate = self;
 }
 
@@ -40,7 +39,6 @@
         [_capture startRecordSuccess:^{
             sender.tag = 1;
             [sender setTitle:@"Stop" forState:UIControlStateNormal];
-            [drawingView.layer setBorderColor:[UIColor redColor].CGColor];
         } fail:^{
             NSLog(@"Start record failed!");
         }];
@@ -49,7 +47,6 @@
         // Stop drawing view and pop up save alert
         sender.tag = 0;
         [sender setTitle:@"Record" forState:UIControlStateNormal];
-        [drawingView.layer setBorderColor:[UIColor clearColor].CGColor];
         [drawingView clear];
         [_capture stopRecord];
     }

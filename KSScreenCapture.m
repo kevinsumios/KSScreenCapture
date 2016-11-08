@@ -14,6 +14,8 @@
 
 @end
 
+static NSString *animationKey = @"KSHighlightAnimation";
+
 @implementation KSScreenCapture {
     THCapture *_capture;
 //    KSAudioCapture *_audioCapture;
@@ -28,6 +30,7 @@
     if (!self) {
         self = [super init];
     }
+    _highlighted = YES;
     _target = target;
     if (!_capture) {
         _capture = [[THCapture alloc] init];
@@ -71,6 +74,9 @@
     void (^recordBlock)(void) = ^{
         if ([_capture startRecording1] && success) {
             success();
+            if (_highlighted) {
+                [self highlightRecordView];
+            }
         } else if (fail) {
             fail();
         }
@@ -91,9 +97,24 @@
 
 - (void)stopRecord {
     [_capture stopRecording];
+    [_capture.captureLayer removeAnimationForKey:animationKey];
     if (_audioCapture) {
         [_audioCapture stopRecord];
     }
+}
+
+- (void)highlightRecordView {
+    // Set the record view layer highlight animation
+    [_capture.captureLayer setBorderWidth:3.0];
+    [_capture.captureLayer setBorderColor:[UIColor clearColor].CGColor];
+    CABasicAnimation *colorAnimation = [CABasicAnimation animationWithKeyPath:@"borderColor"];
+    colorAnimation.fromValue = (id)[UIColor clearColor].CGColor;
+    colorAnimation.toValue = (id)[UIColor redColor].CGColor;
+    colorAnimation.duration = 1.0;
+    colorAnimation.autoreverses = YES;
+    colorAnimation.repeatCount = HUGE_VALF;
+    colorAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
+    [_capture.captureLayer addAnimation:colorAnimation forKey:animationKey];
 }
 
 #pragma mark - File methods
@@ -117,7 +138,9 @@
 
 - (void)exportVideo:(NSString *)path {
     if ([_delegate respondsToSelector:@selector(KSScreenCaptureDidFinish:path:)]) {
-        [_delegate KSScreenCaptureDidFinish:self path:path];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [_delegate KSScreenCaptureDidFinish:self path:path];
+        });
     }
 }
 

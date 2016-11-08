@@ -26,6 +26,8 @@
 @property  KSAudioCapture * _Nullable audioCapture;
 // With audio record or not
 @property BOOL muted;
+// Highlight the record view or not
+@property BOOL highlighted;
 // Permission alert description.
 @property  NSString * _Nullable phPermissionAlertTitle;
 @property NSString * _Nullable phPermissionAlertMessage;

@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'KSScreenCapture'
-  s.version          = '0.1.0'
+  s.version          = '0.2.0'
   s.summary          = 'A tool that can capture your screen\'s action including audio recorder.'
   s.description      = <<-DESC
 It is base on Blazeice's work which can be find originally in https://github.com/Blazeice/ScreenAndAudioRecordDemoScreenAndAudioRecordDemo. Thanks to Blazeice and wayne li.

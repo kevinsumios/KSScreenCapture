@@ -17,7 +17,7 @@
 @class KSScreenCapture;
 
 @protocol KSScreenCaptureDelegate <NSObject>
-- (void)KSScreenCaptureDidFinish:(KSScreenCapture * _Nonnull)capture path:(NSString * _Nonnull)videoPath;
+- (void)KSScreenCaptureDidFinish:(KSScreenCapture * _Nonnull)capture path:(NSString * _Nonnull)videoPath thumb:(UIImage *)thumb;
 
 @end
 

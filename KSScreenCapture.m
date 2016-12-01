@@ -132,14 +132,35 @@ static NSString *animationKey = @"KSHighlightAnimation";
 }
 
 - (void)mergeDidFinish:(NSString *)outputPath WithError:(NSError *)error {
-    DDLogInfo(@"Merge finished: %@.", outputPath);
-    [self exportVideo:outputPath];
+	if (!error) {
+		DDLogInfo(@"Merge finished: %@.", outputPath);
+		//Remove the source file
+		if ([[NSFileManager defaultManager] fileExistsAtPath:_videoPath]) {
+			[[NSFileManager defaultManager] removeItemAtPath:_videoPath error:nil];
+		}
+		if ([[NSFileManager defaultManager] fileExistsAtPath:_audioPath]) {
+			[[NSFileManager defaultManager] removeItemAtPath:_audioPath error:nil];
+		}
+	} else {
+		DDLogError(@"Merge Error: ", error.localizedDescription);
+	}
+	[self exportVideo:outputPath];
 }
 
 - (void)exportVideo:(NSString *)path {
-    if ([_delegate respondsToSelector:@selector(KSScreenCaptureDidFinish:path:)]) {
+	//Create thumbnails
+	AVURLAsset *videoAsset = [[AVURLAsset alloc] initWithURL:[NSURL fileURLWithPath:path] options:nil];
+	AVAssetImageGenerator *gen = [[AVAssetImageGenerator alloc] initWithAsset:videoAsset];
+	gen.appliesPreferredTrackTransform = YES;
+	CMTime time = CMTimeMakeWithSeconds(0.0, 600);
+	CMTime actualTime;
+	CGImageRef image = [gen copyCGImageAtTime:time actualTime:&actualTime error:nil];
+	UIImage *thumb = [[UIImage alloc] initWithCGImage:image];
+	CGImageRelease(image);
+	
+    if ([_delegate respondsToSelector:@selector(KSScreenCaptureDidFinish:path:thumb:)]) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            [_delegate KSScreenCaptureDidFinish:self path:path];
+			[_delegate KSScreenCaptureDidFinish:self path:path thumb:thumb];
         });
     }
 }
@@ -150,7 +171,7 @@ static NSString *animationKey = @"KSHighlightAnimation";
             [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
                 switch (status) {
                     case PHAuthorizationStatusAuthorized:
-                        UISaveVideoAtPathToSavedPhotosAlbum(path, _target, action, nil);
+                        UISaveVideoAtPathToSavedPhotosAlbum(path, _delegate, action, nil);
                         break;
                     case PHAuthorizationStatusDenied:
                         [self savePhotosAlbumAlert];

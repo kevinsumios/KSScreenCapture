@@ -21,7 +21,7 @@ static NSString *animationKey = @"KSHighlightAnimation";
 //    KSAudioCapture *_audioCapture;
     NSString *_videoPath;
     NSString *_audioPath;
-    __kindof UIViewController *_target;
+    __weak __kindof UIViewController *_target;
 }
 
 #pragma mark - Initialize methods

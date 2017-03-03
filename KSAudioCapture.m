@@ -22,7 +22,7 @@
     NSURL *_fileURL;
     NSString *_fileName;
     NSDictionary *_setting;
-    __kindof UIViewController *_target;
+    __weak __kindof UIViewController *_target;
 }
 
 #pragma mark - Initialize methods
